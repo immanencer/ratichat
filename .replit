@@ -1,0 +1,10 @@
+run = "node index.js"
+modules = ["nodejs-22"]
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "node index.js"]
+deploymentTarget = "gce"
+ignorePorts = true

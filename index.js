@@ -264,7 +264,8 @@ class RatipathBot {
             if (!mentionedAvatar && !isHomeChannel) return;
 
             const targetAvatar =
-                mentionedAvatar || this.getHomeChannelAvatar(message.channel.id);
+                mentionedAvatar ||
+                this.getHomeChannelAvatar(message.channel.id);
 
             if (targetAvatar) {
                 // Update the last mentioned channel for the avatar if it's not their home channel
@@ -305,9 +306,15 @@ class RatipathBot {
 
                 // Process the message with a debounce
                 // Usage in handleMessage:
-                this.debounce(`${avatar.name}-${message.channel.id}`, async () => {
-                    await this.processMessages(message.channel, targetAvatar);
-                });
+                this.debounce(
+                    `${targetAvatar.name}-${message.channel.id}`,
+                    async () => {
+                        await this.processMessages(
+                            message.channel,
+                            targetAvatar,
+                        );
+                    },
+                );
 
                 // Handle decay of the dynamic channel
                 this.handleChannelDecay(targetAvatar);
